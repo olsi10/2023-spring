@@ -45,6 +45,18 @@ class Student {
     }
 }
 
+class Kanye {
+    String quote;
+
+    public String getQuote() {
+        return quote;
+    }
+
+    public void setQuote(String quote) {
+        this.quote = quote;
+    }
+}
+
 @RestController
 @RequestMapping("/renew")
 public class MyRenewController {
@@ -223,5 +235,16 @@ public class MyRenewController {
                 String.class);
         String responseBody = response.getBody();
         return responseBody;
+    }
+
+    @GetMapping(value = "/kanye", produces = MediaType.APPLICATION_JSON_VALUE)
+    public Kanye kanye (String k) {
+        RestTemplate rt = new RestTemplate();
+        RequestEntity<String> re = new RequestEntity<>(
+                null, null, HttpMethod.GET,
+                URI.create("https://api.kanye.rest/"));
+        ResponseEntity<Kanye> response = rt.exchange(re, Kanye.class);
+        Kanye rebody = response.getBody();
+        return rebody;
     }
 }
